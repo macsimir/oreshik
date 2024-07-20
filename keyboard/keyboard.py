@@ -6,17 +6,45 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.filters import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+ 
 
+from aiogram import types
 
 def random_question_button():
     kb = [
         [
-            types.KeyboardButton(text="Случайный вопрос"),
+            types.KeyboardButton(text="новый вопрос"),
         ],
     ]
     keyboard = types.ReplyKeyboardMarkup(
         keyboard=kb,
         resize_keyboard=True,
-        input_field_placeholder="Выберите способ подачи"
+        input_field_placeholder=""
     )
+    return keyboard
+
+def mode_selection_start_keyboard():
+    buttons = [
+        [types.InlineKeyboardButton(text="Случайный вопрос", callback_data="random_questions_F_key")],
+        [types.InlineKeyboardButton(text="Вопросы на знание друг друга", callback_data="questions_for_friends_F_key")]
+    ]
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
+    return keyboard
+
+
+def mode_selection_proverka_keyboard():
+    buttons = [
+        [types.InlineKeyboardButton(text="Зайти в лобби", callback_data="connect_to_lobby_F_key")],
+        [types.InlineKeyboardButton(text="Создать лобби", callback_data="create_to_lobby_F_key")]
+    ]
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
+    return keyboard
+
+
+def choice_lobby_keuboard():
+    buttons = [
+        [types.InlineKeyboardButton(text="Зайти в лобби", callback_data="connect_to_lobby_F_key")],
+        [types.InlineKeyboardButton(text="Создать лобби", callback_data="create_to_lobby_F_key")]
+    ]
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
     return keyboard

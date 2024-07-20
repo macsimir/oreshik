@@ -8,6 +8,14 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 Base = declarative_base()
 
+class Lobby_for_questions(Base):
+    __tablename__ = "lobby_for_questions"
+    id_lobby = Column(Integer, primary_key=True)
+    lobby_creator_id = Column(Integer)
+    lobby_creator_name = Column(String)
+    second_user_id = Column(Integer)
+
+
 class User(Base):
     __tablename__ = 'users'
     user_id = Column(Integer, primary_key=True)

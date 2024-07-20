@@ -4,9 +4,9 @@ from utils.dp import bot, dp
 from db.datebase import User, Session, get_user_by_telegram_id
 from utils.config import CHANNEL_ID
 from utils.beautifulle_txt_to_cmd import plain_b_text_to_cmd
-from keyboard.keyboard import random_question_button
+from keyboard.keyboard import random_question_button, mode_selection_start_keyboard
 
-text = "Привет, Я орешек выбери режим"
+text_to_start = "Привет, Я орешек выбери режим работы"
 
 @dp.message(Command("start"))
 async def check_subscription(message: types.Message):
@@ -14,7 +14,7 @@ async def check_subscription(message: types.Message):
     user_id = message.from_user.id
 
     # Создаем сессию для взаимодействия с БД
-    session = Session() 
+    session = Session()
 
     try:
         member = await bot.get_chat_member(chat_id=CHANNEL_ID, user_id=user_id)
@@ -24,15 +24,14 @@ async def check_subscription(message: types.Message):
                 new_user = User(telegram_id=telegram_id, privilege=privilege)
                 session.add(new_user)
                 session.commit()
-                plain_b_text_to_cmd(text="Создан новый пользователь")
                 await message.reply("Спасибо за подписку!")
-                await message.answer("Привет, я орешек. Список команд /help ")
+                await message.answer(text_to_start, reply_markup=mode_selection_start_keyboard())
             else:
                 user = get_user_by_telegram_id(session, telegram_id)  # Передаем session
                 if user and user.privilege == "admin":
-                    await message.answer("Привет, админ", reply_markup=random_question_button)
+                    await message.answer("Привет, админ", reply_markup=random_question_button())
                 else:
-                    await message.answer("Еще раз привет! /random_q")
+                    await message.answer(text_to_start, reply_markup=mode_selection_start_keyboard())
         else:
             await message.reply("Вы не подписаны на канал. Пожалуйста, подпишитесь. @testik092")
     except Exception as e:
