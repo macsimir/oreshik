@@ -6,12 +6,14 @@ from utils.config import CHANNEL_ID
 from utils.beautifulle_txt_to_cmd import plain_b_text_to_cmd
 from keyboard.keyboard import random_question_button, mode_selection_start_keyboard
 
-text_to_start = "Привет, Я орешек выбери режим работы"
 
 @dp.message(Command("start"))
 async def check_subscription(message: types.Message):
+    first_name = message.from_user.first_name 
     telegram_id = message.from_user.id
     user_id = message.from_user.id
+    text_to_start = f"Привет {first_name}, Я орешек выбери режим работы "
+
 
     # Создаем сессию для взаимодействия с БД
     session = Session()
@@ -25,11 +27,11 @@ async def check_subscription(message: types.Message):
                 session.add(new_user)
                 session.commit()
                 await message.reply("Спасибо за подписку!")
-                await message.answer(text_to_start, reply_markup=mode_selection_start_keyboard())
+                await message.answer(first_name, reply_markup=mode_selection_start_keyboard())
             else:
                 user = get_user_by_telegram_id(session, telegram_id)  # Передаем session
                 if user and user.privilege == "admin":
-                    await message.answer("Привет, админ", reply_markup=random_question_button())
+                    await message.answer(f"Привет, админ {first_name}", reply_markup=random_question_button())
                 else:
                     await message.answer(text_to_start, reply_markup=mode_selection_start_keyboard())
         else:

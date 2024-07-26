@@ -34,17 +34,31 @@ def mode_selection_start_keyboard():
 
 def mode_selection_proverka_keyboard():
     buttons = [
-        [types.InlineKeyboardButton(text="Зайти в лобби", callback_data="connect_to_lobby_F_key")],
-        [types.InlineKeyboardButton(text="Создать лобби", callback_data="create_to_lobby_F_key")]
+        [types.InlineKeyboardButton(text="Начать",callback_data="go_to_lobby_F_key")],
+        [types.InlineKeyboardButton(text="Зайти в лобби", callback_data="connect_to_lobby_F_key"),
+         types.InlineKeyboardButton(text="Создать лобби", callback_data="create_to_lobby_F_key")],
     ]
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
     return keyboard
 
 
-def choice_lobby_keuboard():
+# def choice_lobby_keuboard():
+#     buttons = [
+#         [types.InlineKeyboardButton(text="Зайти в лобби", callback_data="connect_to_lobby_F_key")],
+#         [types.InlineKeyboardButton(text="Создать лобби", callback_data="create_to_lobby_F_key")]
+#     ]
+#     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
+#     return keyboard
+
+def connect_to_lobby_choice_keyboard():
     buttons = [
-        [types.InlineKeyboardButton(text="Зайти в лобби", callback_data="connect_to_lobby_F_key")],
-        [types.InlineKeyboardButton(text="Создать лобби", callback_data="create_to_lobby_F_key")]
+        [types.InlineKeyboardButton(text="Лобби №1", callback_data="lobby_1_F"),
+         types.InlineKeyboardButton(text="Лобби №2", callback_data="lobby_2_F")],
+        [types.InlineKeyboardButton(text="Лобби №3", callback_data="lobby_3_F"),
+         types.InlineKeyboardButton(text="Лобби №4", callback_data="lobby_4_F"),],
+         [types.InlineKeyboardButton(text="Лобби №5", callback_data="lobby_5_F"),
+          types.InlineKeyboardButton(text="Назад", callback_data=""),]
+
     ]
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
     return keyboard

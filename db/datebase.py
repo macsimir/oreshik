@@ -8,12 +8,27 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 Base = declarative_base()
 
+
+
+
 class Lobby_for_questions(Base):
     __tablename__ = "lobby_for_questions"
     id_lobby = Column(Integer, primary_key=True)
     lobby_creator_id = Column(Integer)
     lobby_creator_name = Column(String)
     second_user_id = Column(Integer)
+    created_or_uncreated = Column(Boolean)
+
+class Questions_for_each_other(Base):
+    __tablename__ = "questions_for_each_other"
+    question_id = Column(Integer, primary_key=True)
+    question_text = Column(Text)
+
+class Questions_for_each_other_Lobby(Base):
+    __tablename__ = 'questions_for_each_other_lobby'
+    lobby_id = Column(Integer, ForeignKey('lobby_for_questions.id_lobby'), primary_key=True)
+    question_id = Column(Integer, ForeignKey('questions_for_each_other.question_id'), primary_key=True)
+    asked = Column(Boolean, default=False)
 
 
 class User(Base):
@@ -25,6 +40,7 @@ class User(Base):
     @classmethod
     def telegram_id_exists(cls, session, telegram_id):
         return session.query(cls).filter(cls.telegram_id == telegram_id).first() is not None
+
 
 class Question(Base):
     __tablename__ = 'questions'
